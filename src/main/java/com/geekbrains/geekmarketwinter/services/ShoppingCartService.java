@@ -60,7 +60,7 @@ public class ShoppingCartService {
         cart.setQuantity(product, quantity);
     }
 
-    public double getTotalCost(HttpSession session) {
-        return getCurrentCart(session).getTotalCost();
-    }
+//    public double getTotalCost(HttpSession session) {
+//        return getCurrentCart(session).getTotalCost();
+//    }
 }

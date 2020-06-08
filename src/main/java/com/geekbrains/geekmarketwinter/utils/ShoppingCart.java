@@ -1,13 +1,15 @@
 package com.geekbrains.geekmarketwinter.utils;
 
+import com.geekbrains.geekmarketwinter.entites.OrderItem;
 import com.geekbrains.geekmarketwinter.entites.Product;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     private List<OrderItem> items;
     private Double totalCost;
 
@@ -59,5 +61,13 @@ public class ShoppingCart {
 
     private OrderItem findOrderFromProduct(Product product) {
         return items.stream().filter(o -> o.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
+    }
+
+    public Double getTotalCost() {
+        return totalCost;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
     }
 }
