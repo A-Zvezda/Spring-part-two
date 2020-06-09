@@ -1,5 +1,6 @@
 package com.geekbrains.geekmarketwinter.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -9,7 +10,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "products")
@@ -59,11 +62,27 @@ public class Product implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
+    @JsonIgnore
+    @Transient
+    private Long categoryId;
+
     public void addImage(ProductImage productImage) {
         if (images == null) {
             images = new ArrayList<>();
         }
         images.add(productImage);
+    }
+    public static final Map<String, String> COLUMN_MAPPINGS = new HashMap<>();
+
+    static {
+        COLUMN_MAPPINGS.put("id", "id");
+        COLUMN_MAPPINGS.put("category_id", "categoryId");
+        COLUMN_MAPPINGS.put("vendor_code", "vendorCode");
+        COLUMN_MAPPINGS.put("short_description", "shortDescription");
+        COLUMN_MAPPINGS.put("full_description", "fullDescription");
+        COLUMN_MAPPINGS.put("price", "price");
+        COLUMN_MAPPINGS.put("create_at", "createAt");
+        COLUMN_MAPPINGS.put("update_at", "updateAt");
     }
 
     @Override
@@ -149,5 +168,13 @@ public class Product implements Serializable {
 
     public void setUpdateAt(LocalDateTime updateAt) {
         this.updateAt = updateAt;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 }
