@@ -2,6 +2,7 @@ package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.ProductImage;
+import com.geekbrains.geekmarketwinter.repositories.CategoryRepositorySqlO2;
 import com.geekbrains.geekmarketwinter.services.CategoryService;
 import com.geekbrains.geekmarketwinter.services.ProductService;
 import com.geekbrains.geekmarketwinter.services.ImageSaverService;
@@ -21,7 +22,7 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private ImageSaverService imageSaverService;
-
+    private CategoryRepositorySqlO2 categoryRepositorySqlO2;
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -37,6 +38,11 @@ public class ProductController {
         this.imageSaverService = imageSaverService;
     }
 
+    @Autowired
+    public void setCategoryRepositorySqlO2(CategoryRepositorySqlO2 categoryRepositorySqlO2) {
+        this.categoryRepositorySqlO2 = categoryRepositorySqlO2;
+    }
+
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable(name = "id") Long id) {
         Product product = productService.getProductById(id);
@@ -45,7 +51,8 @@ public class ProductController {
             product.setId(0L);
         }
         model.addAttribute("product", product);
-        model.addAttribute("categories", categoryService.getAllCategories());
+        //model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("categories", categoryRepositorySqlO2.getAllCategories());
         return "/edit-product";
     }
 

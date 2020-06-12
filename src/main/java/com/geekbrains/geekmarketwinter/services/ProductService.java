@@ -2,6 +2,7 @@ package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.repositories.ProductRepository;
+import com.geekbrains.geekmarketwinter.repositories.ProductRepositorySqlO2;
 import com.geekbrains.geekmarketwinter.repositories.specifications.ProductSpecs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,12 +16,16 @@ import java.util.List;
 @Service
 public class ProductService {
     private ProductRepository productRepository;
+    private ProductRepositorySqlO2 productRepositorySqlO2;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-
+    @Autowired
+    public void setProductRepositorySqlO2(ProductRepositorySqlO2 productRepositorySqlO2) {
+        this.productRepositorySqlO2 = productRepositorySqlO2;
+    }
     public List<Product> getAllProducts() {
         return (List<Product>)(productRepository.findAll());
     }
@@ -30,7 +35,8 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return productRepositorySqlO2.findById(id);
+        //return productRepository.findById(id).orElse(null);
     }
 
     public Page<Product> getAllProductsByPage(int pageNumber, int pageSize) {
