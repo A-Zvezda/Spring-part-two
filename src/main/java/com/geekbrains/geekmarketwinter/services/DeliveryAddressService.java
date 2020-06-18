@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
-
 import com.geekbrains.geekmarketwinter.repositories.DeliveryAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,8 @@ public class DeliveryAddressService {
     public void setDeliveryAddressRepository(DeliveryAddressRepository deliveryAddressRepository) {
         this.deliveryAddressRepository = deliveryAddressRepository;
     }
-    public List<DeliveryAddress> getDeliveryAddressByUserId(Long userId) {
+
+    public List<DeliveryAddress> getUserAddresses(Long userId) {
         return deliveryAddressRepository.findAllByUserId(userId);
     }
 }

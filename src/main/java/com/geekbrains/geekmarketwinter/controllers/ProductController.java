@@ -2,7 +2,6 @@ package com.geekbrains.geekmarketwinter.controllers;
 
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.ProductImage;
-import com.geekbrains.geekmarketwinter.repositories.CategoryRepositorySqlO2;
 import com.geekbrains.geekmarketwinter.services.CategoryService;
 import com.geekbrains.geekmarketwinter.services.ProductService;
 import com.geekbrains.geekmarketwinter.services.ImageSaverService;
@@ -22,7 +21,7 @@ public class ProductController {
     private ProductService productService;
     private CategoryService categoryService;
     private ImageSaverService imageSaverService;
-    private CategoryRepositorySqlO2 categoryRepositorySqlO2;
+
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -36,46 +35,5 @@ public class ProductController {
     @Autowired
     public void setImageSaverService(ImageSaverService imageSaverService) {
         this.imageSaverService = imageSaverService;
-    }
-
-    @Autowired
-    public void setCategoryRepositorySqlO2(CategoryRepositorySqlO2 categoryRepositorySqlO2) {
-        this.categoryRepositorySqlO2 = categoryRepositorySqlO2;
-    }
-
-    @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable(name = "id") Long id) {
-        Product product = productService.getProductById(id);
-        if (product == null) {
-            product = new Product();
-            product.setId(0L);
-        }
-        model.addAttribute("product", product);
-        //model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("categories", categoryRepositorySqlO2.getAllCategories());
-        return "/edit-product";
-    }
-
-    @PostMapping("/edit")
-    public String processProductAddForm(@Valid @ModelAttribute("product") Product product, BindingResult theBindingResult, Model model, @RequestParam("file") MultipartFile file) {
-        if (product.getId() == 0 && productService.isProductWithTitleExists(product.getTitle())) {
-            theBindingResult.addError(new ObjectError("product.title", "Товар с таким названием уже существует")); // todo не отображает сообщение
-        }
-
-        if (theBindingResult.hasErrors()) {
-            model.addAttribute("categories", categoryService.getAllCategories());
-            return "edit-product";
-        }
-
-        if (!file.isEmpty()) {
-            String pathToSavedImage = imageSaverService.saveFile(file);
-            ProductImage productImage = new ProductImage();
-            productImage.setPath(pathToSavedImage);
-            productImage.setProduct(product);
-            product.addImage(productImage);
-        }
-
-        productService.saveProduct(product);
-        return "redirect:/shop";
     }
 }
