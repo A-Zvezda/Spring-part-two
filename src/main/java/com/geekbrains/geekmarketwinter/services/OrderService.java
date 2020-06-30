@@ -2,9 +2,9 @@ package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.OrderItem;
+import com.geekbrains.geekmarketwinter.entites.OrderStatus;
 import com.geekbrains.geekmarketwinter.entites.User;
 import com.geekbrains.geekmarketwinter.repositories.OrderRepository;
-
 import com.geekbrains.geekmarketwinter.utils.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +18,7 @@ public class OrderService {
     private OrderRepository orderRepository;
 
     private OrderStatusService orderStatusService;
+
     @Autowired
     public void setOrderRepository(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
@@ -27,15 +28,16 @@ public class OrderService {
     public void setOrderStatusService(OrderStatusService orderStatusService) {
         this.orderStatusService = orderStatusService;
     }
+
     @Transactional
-    public Order makeOrder(ShoppingCart currentCart, User user) {
+    public Order makeOrder(ShoppingCart cart, User user) {
         Order order = new Order();
         order.setId(0L);
         order.setUser(user);
-        order.setStatus(orderStatusService.getOrderStatusById(1L));
-        order.setPrice(currentCart.getTotalCost());
-        order.setOrderItems(new ArrayList<>(currentCart.getItems()));
-        for (OrderItem o : currentCart.getItems()) {
+        order.setStatus(orderStatusService.getStatusById(1L));
+        order.setPrice(cart.getTotalCost());
+        order.setOrderItems(new ArrayList<>(cart.getItems()));
+        for (OrderItem o : cart.getItems()) {
             o.setOrder(order);
         }
         return order;
@@ -56,7 +58,7 @@ public class OrderService {
     }
 
     public Order changeOrderStatus(Order order, Long statusId) {
-        order.setStatus(orderStatusService.getOrderStatusById(statusId));
+        order.setStatus(orderStatusService.getStatusById(statusId));
         return saveOrder(order);
     }
 }

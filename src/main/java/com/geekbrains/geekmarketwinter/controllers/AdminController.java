@@ -24,14 +24,8 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAdminPage() {
+    public String showAdminDashboard() {
         return "admin-panel";
-    }
-    @GetMapping("/orders")
-    public String showOrders(Model model) {
-        List<Order> orders = orderService.getAllOrders();
-        model.addAttribute("orders", orders);
-        return "orders-page";
     }
 
     @GetMapping("/orders/ready/{id}")

@@ -17,12 +17,10 @@ import java.util.Locale;
 @Configuration
 @PropertySource("classpath:private.properties")
 @ComponentScan("com.geekbrains.geekmarketwinter")
-// @EnableScheduling
 public class AppConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/images/**")) {
             registry.addResourceHandler("/images/**").addResourceLocations("file:images/");
-//            registry.addResourceHandler("/images/**").addResourceLocations("/images/");
         }
     }
 

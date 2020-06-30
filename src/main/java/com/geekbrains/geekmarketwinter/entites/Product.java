@@ -1,6 +1,5 @@
 package com.geekbrains.geekmarketwinter.entites;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,9 +9,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 @Table(name = "products")
@@ -62,27 +59,11 @@ public class Product implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
-    @JsonIgnore
-    @Transient
-    private Long categoryId;
-
     public void addImage(ProductImage productImage) {
         if (images == null) {
             images = new ArrayList<>();
         }
         images.add(productImage);
-    }
-    public static final Map<String, String> COLUMN_MAPPINGS = new HashMap<>();
-
-    static {
-        COLUMN_MAPPINGS.put("id", "id");
-        COLUMN_MAPPINGS.put("category_id", "categoryId");
-        COLUMN_MAPPINGS.put("vendor_code", "vendorCode");
-        COLUMN_MAPPINGS.put("short_description", "shortDescription");
-        COLUMN_MAPPINGS.put("full_description", "fullDescription");
-        COLUMN_MAPPINGS.put("price", "price");
-        COLUMN_MAPPINGS.put("create_at", "createAt");
-        COLUMN_MAPPINGS.put("update_at", "updateAt");
     }
 
     @Override
@@ -92,89 +73,5 @@ public class Product implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
-    }
-
-    public void setVendorCode(String vendorCode) {
-        this.vendorCode = vendorCode;
-    }
-
-    public List<ProductImage> getImages() {
-        return images;
-    }
-
-    public void setImages(List<ProductImage> images) {
-        this.images = images;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getShortDescription() {
-        return shortDescription;
-    }
-
-    public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
-    }
-
-    public String getFullDescription() {
-        return fullDescription;
-    }
-
-    public void setFullDescription(String fullDescription) {
-        this.fullDescription = fullDescription;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public LocalDateTime getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public Long getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
     }
 }

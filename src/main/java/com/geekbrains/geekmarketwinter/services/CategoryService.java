@@ -1,7 +1,6 @@
 package com.geekbrains.geekmarketwinter.services;
 
 import com.geekbrains.geekmarketwinter.entites.Category;
-import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +18,5 @@ public class CategoryService {
 
     public List<Category> getAllCategories() {
         return (List<Category>)categoryRepository.findAll();
-    }
-
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).get();
     }
 }
