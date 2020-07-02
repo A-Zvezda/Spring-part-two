@@ -2,17 +2,19 @@ package com.geekbrains.geekmarketwinter.entites;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
 @Data
-public class Order {
+public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,6 +25,9 @@ public class Order {
 //    @JsonBackReference
     private User user;
 
+
+
+    @JsonManagedReference
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", fetch = FetchType.EAGER)
     private List<OrderItem> orderItems;
 
@@ -53,6 +58,22 @@ public class Order {
     @Column(name = "update_at")
     @CreationTimestamp
     private LocalDateTime updateAt;
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "user='" + user.getId() + '\'' +
+                "status='" + status.getId() + '\'' +
+                "price='" + price + '\'' +
+                "deliveryPrice='" + deliveryPrice + '\'' +
+                "deliveryAddress='" + deliveryAddress.getId() + '\'' +
+                "phoneNumber='" +  phoneNumber  + '\'' +
+                "deliveryDate='" + deliveryDate + '\'' +
+                "orderItems'" + orderItems + '\'' +
+                ", createAt='" + createAt + '\'' +
+                ", updateAt=" + updateAt +
+                '}';
+    }
 
     @JsonIgnore
     @Transient
