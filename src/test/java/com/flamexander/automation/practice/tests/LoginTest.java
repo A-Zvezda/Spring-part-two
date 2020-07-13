@@ -11,7 +11,7 @@ public class LoginTest extends BaseUITest {
         return new Object[][]{
                 {"sdfsdfef", "kdsjfefe", "Invalid email address."},
                 {"ergregreg", "kds435345345jfefe", "Invalid email address."},
-                {"rbereger", "325345", "Invalid email address."}
+                {"admin", "123", "Invalid email address."}
         };
     }
 

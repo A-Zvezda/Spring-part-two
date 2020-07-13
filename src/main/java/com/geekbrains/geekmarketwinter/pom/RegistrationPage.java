@@ -1,4 +1,4 @@
-package com.flamexander.automation.practice.pom;
+package com.geekbrains.geekmarketwinter.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

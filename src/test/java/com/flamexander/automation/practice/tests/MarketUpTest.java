@@ -9,6 +9,9 @@ public class MarketUpTest extends MarketTest {
     public void checkHomePage() {
         homePage.home();
         homePage.goToShopPage();
+        homePage.goToAuthPage();
+        homePage.goToCartPage();
+//        homePage.goToProfilePage();
 //        authPage.fillSignInFormAndConfirm(email, password);
 //        Assert.assertTrue(authPage.isAlertPresent());
 //        Assert.assertEquals(result, authPage.getAlertContainerText());

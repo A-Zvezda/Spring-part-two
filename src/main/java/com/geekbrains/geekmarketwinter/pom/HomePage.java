@@ -1,4 +1,4 @@
-package com.flamexander.automation.practice.pom;
+package com.geekbrains.geekmarketwinter.pom;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,7 +23,15 @@ public class HomePage extends BaseActions {
     }
 
     public void goToAuthPage() {
-        driver.findElement(SIGN_IN_MENU).click();
+        //driver.findElement(SIGN_IN_MENU).click();
+        List<WebElement> elements = driver.findElements(MENU_ITEM);
+        System.out.println(elements);
+
+        for (WebElement o : elements ) {
+            if (o.getText().equalsIgnoreCase("btn btn-secondary btn-sm")){
+                o.click();
+            }
+        }
     }
 
     public void goToShopPage() {
@@ -38,4 +46,35 @@ public class HomePage extends BaseActions {
             }
         }
     }
+
+    public void goToCartPage() {
+        // WebElement web =  driver.findElement(NAV_ITEM);
+
+        List<WebElement> elements = driver.findElements(MENU_ITEM);
+        System.out.println(elements);
+
+        for (WebElement o : elements ) {
+            if (o.getText().equalsIgnoreCase("Корзина\n(current)")){
+                o.click();
+            }
+        }
+
+    }
+
+    public void goToProfilePage() {
+        // WebElement web =  driver.findElement(NAV_ITEM);
+
+        List<WebElement> elements = driver.findElements(MENU_ITEM);
+        System.out.println(elements);
+
+
+        for (WebElement o : elements ) {
+            if (o.getText().equalsIgnoreCase("Профиль\n(current)")){
+                o.click();
+            }
+        }
+
+    }
+
+
 }
