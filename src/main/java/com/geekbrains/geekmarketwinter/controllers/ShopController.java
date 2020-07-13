@@ -1,5 +1,6 @@
 package com.geekbrains.geekmarketwinter.controllers;
 
+import com.geekbrains.geekmarketwinter.entites.DeliveryAddress;
 import com.geekbrains.geekmarketwinter.entites.Order;
 import com.geekbrains.geekmarketwinter.entites.Product;
 import com.geekbrains.geekmarketwinter.entites.User;
@@ -13,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +32,12 @@ public class ShopController {
     private ProductService productService;
     private ShoppingCartService shoppingCartService;
     private DeliveryAddressService deliverAddressService;
+    private  OrderMessageSender orderMessageSender;
 
+    @Autowired
+    public void MessageController(OrderMessageSender orderMessageSender) {
+        this.orderMessageSender = orderMessageSender;
+    }
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -105,6 +113,19 @@ public class ShopController {
         return "redirect:" + referrer;
     }
 
+    @GetMapping("/order/fill")
+    public String orderFill(Model model, HttpServletRequest httpServletRequest, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        User user = userService.findByUserName(principal.getName());
+        Order order = orderService.makeOrder(shoppingCartService.getCurrentCart(httpServletRequest.getSession()), user);
+        List<DeliveryAddress> deliveryAddresses = deliverAddressService.getUserAddresses(user.getId());
+        model.addAttribute("order", order);
+        model.addAttribute("deliveryAddresses", deliveryAddresses);
+        return "order-filler";
+    }
+
     @PostMapping("/order/confirm")
     public String orderConfirm(Model model, HttpServletRequest httpServletRequest, @ModelAttribute(name = "order") Order orderFromFrontend, Principal principal) {
         if (principal == null) {
@@ -117,6 +138,7 @@ public class ShopController {
         order.setDeliveryDate(LocalDateTime.now().plusDays(7));
         order.setDeliveryPrice(0.0);
         order = orderService.saveOrder(order);
+        orderMessageSender.sendOrder(order);
         model.addAttribute("order", order);
         return "order-filler";
     }

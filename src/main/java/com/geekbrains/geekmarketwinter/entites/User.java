@@ -1,5 +1,6 @@
 package com.geekbrains.geekmarketwinter.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ public class User {
 
     @Column(name = "username")
     private String userName;
-
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 

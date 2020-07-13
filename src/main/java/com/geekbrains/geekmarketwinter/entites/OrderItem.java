@@ -1,14 +1,16 @@
 package com.geekbrains.geekmarketwinter.entites;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "orders_item")
 @Data
-public class OrderItem {
+public class OrderItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,7 +31,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-//    @JsonBackReference
+    @JsonBackReference
     private Order order;
 
     public Long getId() {
