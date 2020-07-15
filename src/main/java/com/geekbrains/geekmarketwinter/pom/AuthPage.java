@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AuthPage extends BaseActions {
     private static final By EMAIL_FIELD = By.cssSelector("#email");
-    private static final By PASSWORD_FIELD = By.cssSelector("#passwd");
+    private static final By PASSWORD_FIELD = By.cssSelector("#password");
     private static final By SUBMIT_LOGIN_BTN = By.cssSelector("#SubmitLogin");
-
+    private static final By USERNAME_FIELD = By.cssSelector("#username");
     private static final By ALERT_DANGER = By.cssSelector(".alert.alert-danger");
     private static final By ALERT_DANGER_CONTAINER_TEXT = By.cssSelector(".alert.alert-danger > ol > li");
 
@@ -19,8 +19,8 @@ public class AuthPage extends BaseActions {
         super(driver, wait);
     }
 
-    public void fillSignInFormAndConfirm(String email, String password) {
-        typeInField(EMAIL_FIELD, email);
+    public void fillSignInFormAndConfirm(String userName, String password) {
+        typeInField(USERNAME_FIELD, userName);
         typeInField(PASSWORD_FIELD, password);
         driver.findElement(SUBMIT_LOGIN_BTN).click();
     }
