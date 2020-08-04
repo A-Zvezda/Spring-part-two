@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class HomePage extends BaseActions {
-    private static final String HOME_PAGE_URL = "http://localhost:8189/project/";
+    private static final String HOME_PAGE_URL = "http://localhost:8181/";
 
     private static final By SIGN_IN_MENU = By.cssSelector("a.login");
     private static final By MENU = By.cssSelector(".navbar-nav");
